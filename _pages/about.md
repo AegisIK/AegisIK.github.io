@@ -12,3 +12,5 @@ My name is Kevin, and I'm currently a first-year PhD student at Carnegie Mellon 
 My research interests lie primarily in using AI for materials and drug discovery and automated scientific discovery. I come primarily from a machine learning background as opposed to a chemistry or biology background. My research related experiences involve Pytorch, Cython, performance programming with C, and CUDA. 
 
 I also enjoy general full stack software engineering and LLMs and have experience building large scale software systems for startups I've worked on in the past or for the [UC Berkeley EECS Department](https://eecs.berkeley.edu/).
+
+If you have any questions regarding Berkeley, CMU, finding internships/research, or general life stuff, feel free to email me! My email can be found on the sidebar. 
