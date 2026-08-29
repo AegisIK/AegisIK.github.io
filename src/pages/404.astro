@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+---
+<BaseLayout title="Page not found" description="This page doesn't exist." noindex>
+  <h1 class="name">Page not found</h1>
+  <p class="bio">
+    That page doesn't exist. Head back to <a href="/">{site.name}</a> or browse
+    the <a href="/blog">writing</a>.
+  </p>
+</BaseLayout>

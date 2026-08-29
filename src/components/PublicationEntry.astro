@@ -1,0 +1,22 @@
+---
+import { highlightAuthor, type Publication } from '../lib/site';
+
+interface Props { pub: Publication }
+const { pub } = Astro.props;
+---
+<article class="pub">
+  <a class="pub-title" href={pub.url} target="_blank" rel="noopener">{pub.title}</a>
+  <div class="pub-authors" set:html={highlightAuthor(pub.authors)} />
+  <div class="pub-venue">{pub.venue}</div>
+  {pub.award && <div class="pub-award">{pub.award}</div>}
+  {pub.links?.length && (
+    <div class="pub-links">
+      {pub.links.map((link, i) => (
+        <>
+          {i > 0 && <span class="sep">/</span>}
+          <a href={link.url} target="_blank" rel="noopener">{link.label}</a>
+        </>
+      ))}
+    </div>
+  )}
+</article>

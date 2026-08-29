@@ -1,0 +1,15 @@
+---
+import { site } from '../lib/site';
+---
+<nav class="linkrow" aria-label="Profiles and contact">
+  {site.links.map((link) => (
+    <a
+      href={link.url}
+      rel={[
+        link.me ? 'me' : null,
+        link.url.startsWith('http') ? 'noopener' : null,
+      ].filter(Boolean).join(' ') || undefined}
+      target={link.url.startsWith('http') ? '_blank' : undefined}
+    >{link.label}</a>
+  ))}
+</nav>

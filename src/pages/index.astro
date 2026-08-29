@@ -1,0 +1,95 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LinkRow from '../components/LinkRow.astro';
+import Section from '../components/Section.astro';
+import PublicationEntry from '../components/PublicationEntry.astro';
+import { site, publications } from '../lib/site';
+
+// The intro prose lives in content/about.md so it stays editable as Markdown.
+const about = await getEntry('about', 'about');
+if (!about) throw new Error('content/about.md is missing.');
+const { Content: Bio } = await render(about);
+
+// Latest posts for the homepage teaser. Drafts never appear.
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+});
+
+// Each paper as a ScholarlyArticle, linked back to the Person entity. This is
+// what makes your publication list machine-readable to Google and to the AI
+// answer engines that increasingly mediate "who is Kevin Han" queries.
+const pubSchema = publications.map((p) => ({
+  '@type': 'ScholarlyArticle',
+  headline: p.title,
+  name: p.title,
+  author: p.authors.split(',').map((a) => ({
+    '@type': 'Person',
+    name: a.replace(/\*/g, '').trim(),
+  })),
+  datePublished: String(p.year),
+  publisher: { '@type': 'Organization', name: p.venue },
+  url: p.url,
+  ...(p.award && { award: p.award }),
+  mainEntityOfPage: { '@id': `${site.url}/#person` },
+}));
+
+const profilePage = {
+  '@type': 'ProfilePage',
+  '@id': `${site.url}/#profilepage`,
+  url: site.url,
+  name: `${site.name} — ${site.tagline}`,
+  mainEntity: { '@id': `${site.url}/#person` },
+};
+---
+
+<BaseLayout
+  title={`${site.name} — ${site.tagline}`}
+  appendSiteName={false}
+  description={site.description}
+  type="profile"
+  schema={[profilePage, ...pubSchema]}
+>
+  <div class="intro-row">
+    <div class="intro-body">
+      <h1 class="name">{site.name}</h1>
+      <div class="bio"><Bio /></div>
+    </div>
+    <div class="intro-photo">
+      <img
+        src={site.photo}
+        alt={site.photoAlt}
+        width="240"
+        height="240"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+  </div>
+
+  <LinkRow />
+
+  <Section title="Selected Papers" note={about.data.researchBlurb} id="papers">
+    {publications.map((pub) => <PublicationEntry pub={pub} />)}
+  </Section>
+
+  {posts.length > 0 && (
+    <Section title="Writing" id="writing">
+      {posts.map((post) => (
+        <article class="post-item">
+          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+          <div class="post-meta">
+            <time datetime={post.data.date.toISOString()}>
+              {dateFmt.format(post.data.date)}
+            </time>
+          </div>
+          <p class="post-excerpt">{post.data.description}</p>
+        </article>
+      ))}
+    </Section>
+  )}
+</BaseLayout>

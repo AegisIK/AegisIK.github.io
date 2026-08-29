@@ -1,0 +1,75 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  PUBLICATIONS
+#
+#  To add a paper, copy a block and edit it. Newest at the top — the page
+#  renders them in exactly this order.
+#
+#  Your name is bolded automatically (see `name` / `nameVariants` in site.yaml).
+#  Mark co-first authorship with an asterisk, e.g. "Kevin Han*, Yuda Song*".
+#
+#  Fields:
+#    title    (required)  Paper title
+#    authors  (required)  Comma-separated, in order
+#    venue    (required)  Conference / journal + year
+#    url      (required)  Canonical link — used for the title link + JSON-LD
+#    year     (required)  Used for structured data and sorting sanity
+#    award    (optional)  Rendered in italics under the venue
+#    links    (optional)  The PDF / CODE / WEBSITE row
+# ─────────────────────────────────────────────────────────────────────────────
+
+- title: "SMDD-Bench: Can LLMs Solve Real-World Small Molecule Drug Design Tasks?"
+  authors: "Kevin Han, Renfei Zhang, Kathy Wei, Hamed Mahdavi, Niloofar Mireshghallah, Amir Barati Farimani"
+  venue: "arXiv preprint, 2026"
+  year: 2026
+  url: "https://arxiv.org/abs/2605.21740"
+  links:
+    - label: pdf
+      url: "https://arxiv.org/abs/2605.21740"
+    - label: website
+      url: "https://smddbench.com/"
+
+- title: "Smooth Dynamic Cutoffs for Machine Learning Interatomic Potentials"
+  authors: "Kevin Han, Haolin Cong, Bowen Deng, Amir Barati Farimani"
+  venue: "International Conference on Machine Learning (ICML), 2026"
+  year: 2026
+  url: "https://arxiv.org/abs/2601.21147"
+  links:
+    - label: pdf
+      url: "https://arxiv.org/abs/2601.21147"
+    - label: poster
+      url: "https://icml.cc/virtual/2026/poster/65682"
+
+- title: "TDFlow: Agentic Workflows for Test Driven Development"
+  authors: "Kevin Han, Siddharth Maddikayala, Tim Knappe, Om Patel, Austen Liao, Amir Barati Farimani"
+  venue: "European Chapter of the Association for Computational Linguistics (EACL), 2026"
+  year: 2026
+  url: "https://arxiv.org/abs/2510.23761"
+  links:
+    - label: pdf
+      url: "https://arxiv.org/abs/2510.23761"
+    - label: anthology
+      url: "https://aclanthology.org/2026.eacl-long.70/"
+
+- title: "DistMLIP: A Distributed Inference Platform for Machine Learning Interatomic Potentials"
+  authors: "Kevin Han, Bowen Deng, Amir Barati Farimani, Gerbrand Ceder"
+  venue: "International Conference on Learning Representations (ICLR), 2026"
+  year: 2025
+  url: "https://arxiv.org/abs/2506.02023"
+  links:
+    - label: pdf
+      url: "https://arxiv.org/abs/2506.02023"
+    - label: code
+      url: "https://github.com/AegisIK/DistMLIP"
+
+- title: "CHGNet as a pretrained universal neural network potential for charge-informed atomistic modelling"
+  authors: "Bowen Deng, Peichen Zhong, KyuJung Jun, Janosh Riebesell, Kevin Han, Christopher J. Bartel, Gerbrand Ceder"
+  venue: "Nature Machine Intelligence, 2023"
+  year: 2023
+  url: "https://www.nature.com/articles/s42256-023-00716-3"
+  links:
+    - label: pdf
+      url: "https://www.nature.com/articles/s42256-023-00716-3"
+    - label: code
+      url: "https://github.com/CederGroupHub/chgnet"
+    - label: dataset
+      url: "https://figshare.com/articles/dataset/23713842"

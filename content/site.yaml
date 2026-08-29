@@ -1,0 +1,88 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  SITE-WIDE SETTINGS  —  edit these and everything else follows
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Your name. Used in the <h1>, the page <title>, JSON-LD, and bolded
+# automatically wherever it appears in a publication's author list.
+name: Kevin Han
+
+# Alternate spellings of your name. These are ALSO bolded in author lists,
+# and fed to search engines as alternate names so all variants resolve to you.
+nameVariants:
+  - Kevin X. Han
+  - Kevin Xu Han
+  - K. Han
+
+# One-line role. Appears under your name in search results and social cards.
+tagline: PhD Student at Carnegie Mellon University
+
+# The meta description. THIS IS THE SINGLE HIGHEST-LEVERAGE SEO FIELD.
+# Aim for 150–160 characters. Lead with your name, then what you do, then
+# the terms someone would actually type into Google to find you.
+description: >-
+  Kevin Han is a PhD student at Carnegie Mellon University researching machine
+  learning interatomic potentials, AI for materials and drug discovery, and LLM
+  agents. Author of CHGNet, DistMLIP, and TDFlow.
+
+# Keywords for your knowledge-graph entity. Not a ranking factor on their own,
+# but they sharpen how search engines classify you.
+keywords:
+  - Kevin Han
+  - machine learning interatomic potentials
+  - AI for materials discovery
+  - AI for drug discovery
+  - LLM agents
+  - Carnegie Mellon University
+  - computational materials science
+
+url: https://kevinxhan.com
+locale: en_US
+
+# Profile photo. Drop a new file in public/images/ and change this path.
+photo: /images/kevin.jpg
+photoAlt: Kevin Han
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  LINK ROW  —  the uppercase monospace links under your bio
+#  Reorder, add, or delete freely. `rel: me` on a link tells search engines
+#  the profile is verifiably yours, which strengthens entity resolution.
+# ─────────────────────────────────────────────────────────────────────────────
+links:
+  - label: Email
+    url: mailto:kevinhan@cmu.edu
+  - label: Scholar
+    url: https://scholar.google.com/citations?user=ZK-MLQUAAAAJ&hl=en
+    me: true
+  - label: GitHub
+    url: https://github.com/AegisIK
+    me: true
+  - label: LinkedIn
+    url: https://linkedin.com/in/han-kevin
+    me: true
+  - label: CV
+    url: /cv.pdf          # TODO: drop your CV at public/cv.pdf, or delete this entry
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  STRUCTURED DATA  —  feeds the JSON-LD Person schema that Google reads to
+#  build a knowledge panel for you. Fill in what applies; delete what doesn't.
+# ─────────────────────────────────────────────────────────────────────────────
+affiliation:
+  name: Carnegie Mellon University
+  url: https://www.cmu.edu/
+alumniOf:
+  - name: University of California, Berkeley
+    url: https://www.berkeley.edu/
+jobTitle: PhD Student
+worksFor: Carnegie Mellon University
+knowsAbout:
+  - Machine Learning
+  - Computational Materials Science
+  - Molecular Dynamics
+  - Drug Discovery
+  - Large Language Models
+
+# Verification tokens. Paste the code from Google Search Console / Bing
+# Webmaster Tools here to prove you own the domain. See README for how.
+verification:
+  google:   ""
+  bing:     ""

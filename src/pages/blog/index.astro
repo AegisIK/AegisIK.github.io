@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { site } from '../../lib/site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+});
+
+const blogSchema = {
+  '@type': 'Blog',
+  '@id': `${site.url}/blog#blog`,
+  url: `${site.url}/blog`,
+  name: `${site.name} — Writing`,
+  author: { '@id': `${site.url}/#person` },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    url: `${site.url}/blog/${p.id}`,
+    datePublished: p.data.date.toISOString(),
+    author: { '@id': `${site.url}/#person` },
+  })),
+};
+---
+
+<BaseLayout
+  title="Writing"
+  description={`Essays and notes by ${site.name} on machine learning, scientific computing, and research engineering.`}
+  schema={[blogSchema]}
+>
+  <a class="backlink" href="/">&larr; {site.name}</a>
+
+  <Section title="Writing" id="posts">
+    {posts.length === 0 ? (
+      <p class="empty-note">
+        Nothing here yet. Posts will appear as soon as the first Markdown file
+        lands in <code>content/blog/</code>.
+      </p>
+    ) : (
+      posts.map((post) => (
+        <article class="post-item">
+          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+          <div class="post-meta">
+            <time datetime={post.data.date.toISOString()}>
+              {dateFmt.format(post.data.date)}
+            </time>
+            {post.data.tags.length > 0 && <span> · {post.data.tags.join(', ')}</span>}
+          </div>
+          <p class="post-excerpt">{post.data.description}</p>
+        </article>
+      ))
+    )}
+  </Section>
+</BaseLayout>

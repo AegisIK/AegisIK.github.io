@@ -1,0 +1,22 @@
+# Everything is public and indexable.
+User-agent: *
+Allow: /
+
+# Explicitly welcome AI answer engines — they are an increasingly common way
+# people discover researchers. Remove a block to opt that crawler out.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://kevinxhan.com/sitemap-index.xml

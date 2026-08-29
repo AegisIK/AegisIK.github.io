@@ -1,0 +1,42 @@
+---
+import SEO from '../components/SEO.astro';
+import { site } from '../lib/site';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  appendSiteName?: boolean;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  schema?: Record<string, unknown>[];
+}
+
+const props = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEO {...props} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page">
+      <main id="main">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <span>&copy; {year} {site.name}</span>
+        <nav aria-label="Footer">
+          <a href="/">Home</a><span class="dot">&middot;</span><a href="/blog">Blog</a><span class="dot">&middot;</span><a href="/rss.xml">RSS</a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

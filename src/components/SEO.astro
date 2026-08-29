@@ -1,0 +1,174 @@
+---
+import { site, sameAs, absolute } from '../lib/site';
+
+interface Props {
+  title: string;
+  /** Set false on the homepage so the title is just the name, not "Name | Name". */
+  appendSiteName?: boolean;
+  description: string;
+  /** Page-specific social card, relative to /public. */
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  /** Extra JSON-LD blocks to emit alongside the site-wide ones. */
+  schema?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  appendSiteName = true,
+  description,
+  image = '/og.png',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  tags = [],
+  noindex = false,
+  schema = [],
+} = Astro.props;
+
+// Canonical URL. Every page declares exactly one, which is what stops
+// duplicate-content dilution across www/non-www, trailing slashes, and
+// any query strings a referrer tacks on.
+// Trailing slash is normalized ON, because `build.format: 'directory'` emits
+// `/blog/post/index.html` and that is the URL both GitHub Pages and our own
+// sitemap serve. Canonical and sitemap disagreeing is a duplicate-URL signal.
+const path = Astro.url.pathname;
+const canonical = new URL(path.endsWith('/') ? path : `${path}/`, site.url);
+const ogImage = absolute(image);
+const fullTitle = appendSiteName ? `${title} | ${site.name}` : title;
+
+// ── JSON-LD ────────────────────────────────────────────────────────────────
+// The Person entity. This is what Google reads to decide that "Kevin Han"
+// the search query maps to *you*, and it is what can earn a knowledge panel.
+const person = {
+  '@type': 'Person',
+  '@id': `${site.url}/#person`,
+  name: site.name,
+  alternateName: site.nameVariants,
+  url: site.url,
+  image: absolute(site.photo),
+  description: site.description,
+  jobTitle: site.jobTitle,
+  ...(site.affiliation && {
+    affiliation: {
+      '@type': 'Organization',
+      name: site.affiliation.name,
+      ...(site.affiliation.url && { url: site.affiliation.url }),
+    },
+  }),
+  ...(site.worksFor && {
+    worksFor: { '@type': 'Organization', name: site.worksFor },
+  }),
+  ...(site.alumniOf?.length && {
+    alumniOf: site.alumniOf.map((a) => ({
+      '@type': 'CollegeOrUniversity',
+      name: a.name,
+      ...(a.url && { url: a.url }),
+    })),
+  }),
+  ...(site.knowsAbout?.length && { knowsAbout: site.knowsAbout }),
+  ...(sameAs.length && { sameAs }),
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${site.url}/#website`,
+  url: site.url,
+  name: site.name,
+  description: site.description,
+  inLanguage: 'en-US',
+  publisher: { '@id': `${site.url}/#person` },
+};
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [person, website, ...schema],
+};
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{/* Crawler directives. max-image-preview:large is what allows a big
+    thumbnail in Google results — a real click-through-rate win. */}
+<meta
+  name="robots"
+  content={
+    noindex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+  }
+/>
+<meta name="author" content={site.name} />
+{site.keywords?.length && <meta name="keywords" content={site.keywords.join(', ')} />}
+
+{/* Open Graph — LinkedIn, Slack, iMessage, Facebook */}
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content={site.locale} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+{publishedTime && (
+  <meta property="article:published_time" content={publishedTime.toISOString()} />
+)}
+{modifiedTime && (
+  <meta property="article:modified_time" content={modifiedTime.toISOString()} />
+)}
+{tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+{/* Twitter / X */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{/* Search Console / Bing Webmaster ownership proof */}
+{site.verification?.google && (
+  <meta name="google-site-verification" content={site.verification.google} />
+)}
+{site.verification?.bing && (
+  <meta name="msvalidate.01" content={site.verification.bing} />
+)}
+
+{/* Feed discovery */}
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${site.name} — Blog`}
+  href={absolute('/rss.xml')}
+/>
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+{/* Icons + theme */}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#ffffff" />
+
+{/* Fonts. preconnect shaves a round trip off first paint; `display=swap`
+    means text renders immediately in the fallback rather than blocking. */}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+/>
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(graph)}
+/>
