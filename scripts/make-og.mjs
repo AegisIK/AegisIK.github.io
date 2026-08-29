@@ -54,3 +54,11 @@ await sharp(Buffer.from(svg))
   .toFile('public/og.png');
 
 console.log(`✓ public/og.png  (${W}x${H})`);
+
+// Apple touch icon (180x180), rendered from the same favicon mark.
+await sharp(Buffer.from(await fs.readFile('public/favicon.svg', 'utf8')))
+  .resize(180, 180)
+  .png()
+  .toFile('public/apple-touch-icon.png');
+
+console.log('✓ public/apple-touch-icon.png  (180x180)');

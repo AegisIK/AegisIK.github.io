@@ -59,8 +59,9 @@ links:
   - label: LinkedIn
     url: https://linkedin.com/in/han-kevin
     me: true
-  - label: CV
-    url: /cv.pdf          # TODO: drop your CV at public/cv.pdf, or delete this entry
+  # Uncomment once you've dropped a PDF at public/cv.pdf:
+  # - label: CV
+  #   url: /cv.pdf
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  STRUCTURED DATA  —  feeds the JSON-LD Person schema that Google reads to
