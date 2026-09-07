@@ -19,6 +19,7 @@ npm run build   # production build into dist/
 |---|---|
 | Change my bio | `content/about.md` |
 | Add or reorder a paper | `content/publications.yaml` |
+| Add an invited talk | `content/talks.yaml` |
 | Change my name, tagline, links, or SEO description | `content/site.yaml` |
 | Write a blog post | new file in `content/blog/` |
 | Swap my photo | replace `public/images/kevin.jpg` |
@@ -47,6 +48,22 @@ Open `content/publications.yaml` and copy an existing block to the top:
 
 Your name is bolded automatically. For co-first authorship write `Kevin Han*`.
 Papers render in file order, so newest goes at the top.
+
+### Adding a talk
+
+Open `content/talks.yaml` and add a block anywhere — talks sort themselves by
+date, newest first:
+
+```yaml
+- venue: "SLAC-Stanford Battery Center"
+  date: "2026-09"                  # "YYYY-MM", quoted
+  title: "Scaling MLIP inference"  # optional
+  location: "Menlo Park, CA"       # optional
+  url: "https://..."               # optional — slides, recording, event page
+```
+
+Only `venue` and `date` are required. The section disappears entirely if the
+file is empty.
 
 ### Writing a post
 
@@ -136,6 +153,7 @@ content/            ← everything you edit
   site.yaml           name, links, SEO, structured data
   about.md            homepage bio prose
   publications.yaml   papers
+  talks.yaml          invited talks
   blog/               posts
 public/             ← static files served as-is
   images/, og.png, favicon.svg, robots.txt, CNAME

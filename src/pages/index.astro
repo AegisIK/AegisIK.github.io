@@ -4,7 +4,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import LinkRow from '../components/LinkRow.astro';
 import Section from '../components/Section.astro';
 import PublicationEntry from '../components/PublicationEntry.astro';
-import { site, publications } from '../lib/site';
+import TalkEntry from '../components/TalkEntry.astro';
+import { site, publications, talks } from '../lib/site';
 
 // The intro prose lives in content/about.md so it stays editable as Markdown.
 const about = await getEntry('about', 'about');
@@ -76,6 +77,12 @@ const profilePage = {
   <Section title="Publications" note={about.data.researchBlurb} id="papers">
     {publications.map((pub) => <PublicationEntry pub={pub} />)}
   </Section>
+
+  {talks.length > 0 && (
+    <Section title="Invited Talks" id="talks">
+      {talks.map((talk) => <TalkEntry talk={talk} />)}
+    </Section>
+  )}
 
   {posts.length > 0 && (
     <Section title="Writing" id="writing">

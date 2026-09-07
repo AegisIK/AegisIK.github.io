@@ -1,0 +1,24 @@
+---
+import { formatTalkDate, type Talk } from '../lib/site';
+
+interface Props { talk: Talk }
+const { talk } = Astro.props;
+---
+<article class="talk">
+  {talk.title ? (
+    <>
+      {talk.url
+        ? <a class="talk-title" href={talk.url} target="_blank" rel="noopener">{talk.title}</a>
+        : <div class="talk-title">{talk.title}</div>}
+      <div class="talk-venue">{talk.venue}</div>
+    </>
+  ) : (
+    talk.url
+      ? <a class="talk-title" href={talk.url} target="_blank" rel="noopener">{talk.venue}</a>
+      : <div class="talk-title">{talk.venue}</div>
+  )}
+  <div class="talk-meta">
+    <time datetime={talk.date}>{formatTalkDate(talk.date)}</time>
+    {talk.location && <><span class="sep">&middot;</span>{talk.location}</>}
+  </div>
+</article>

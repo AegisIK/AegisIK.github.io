@@ -1,5 +1,6 @@
 import siteData from '../../content/site.yaml';
 import publicationData from '../../content/publications.yaml';
+import talkData from '../../content/talks.yaml';
 
 export interface SiteLink {
   label: string;
@@ -20,6 +21,15 @@ export interface Publication {
   url: string;
   award?: string;
   links?: PubLink[];
+}
+
+export interface Talk {
+  venue: string;
+  /** "YYYY-MM". Kept as a string so YAML never guesses at a timezone. */
+  date: string;
+  title?: string;
+  location?: string;
+  url?: string;
 }
 
 export interface Site {
@@ -43,6 +53,22 @@ export interface Site {
 
 export const site = siteData as Site;
 export const publications = publicationData as Publication[];
+
+/** Invited talks, newest first. Ties keep the order they appear in the file. */
+export const talks = (talkData as Talk[])
+  .slice()
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const monthFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric', month: 'long', timeZone: 'UTC',
+});
+
+/** "2026-09" -> "September 2026". Anything unparseable passes through as-is. */
+export function formatTalkDate(date: string): string {
+  const m = /^(\d{4})-(\d{2})$/.exec(date);
+  if (!m) return date;
+  return monthFmt.format(new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, 1)));
+}
 
 /** Every profile URL we assert ownership of — feeds JSON-LD `sameAs`. */
 export const sameAs = site.links

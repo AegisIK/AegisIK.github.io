@@ -1,5 +1,5 @@
 ---
-import { site, sameAs, absolute } from '../lib/site';
+import { site, sameAs, talks, absolute } from '../lib/site';
 
 interface Props {
   title: string;
@@ -71,6 +71,20 @@ const person = {
     })),
   }),
   ...(site.knowsAbout?.length && { knowsAbout: site.knowsAbout }),
+  // Invited talks hang off the Person as `performerIn` rather than standing
+  // alone as Event entities — they are evidence of who you are, not events
+  // anyone can attend, so they belong to the entity and not the rich-result
+  // Event pipeline.
+  ...(talks.length && {
+    performerIn: talks.map((t) => ({
+      '@type': 'Event',
+      name: t.title ?? `Invited talk — ${t.venue}`,
+      startDate: t.date,
+      organizer: { '@type': 'Organization', name: t.venue },
+      ...(t.location && { location: { '@type': 'Place', name: t.location } }),
+      ...(t.url && { url: t.url }),
+    })),
+  }),
   ...(sameAs.length && { sameAs }),
 };
 

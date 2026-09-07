@@ -209,6 +209,33 @@ h1.name {
   margin: 0 7px;
 }
 
+/* ─── Invited talks ──────────────────────────────────────────────────────── */
+.talk {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.talk-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+  border-bottom: 0;
+}
+a.talk-title:hover { color: var(--accent); }
+.talk-venue {
+  margin-top: 3px;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-strong);
+}
+.talk-meta {
+  margin-top: 5px;
+  font: 400 13px/1.5 var(--mono);
+  color: var(--muted-light);
+}
+.talk-meta .sep { margin: 0 7px; }
+
 /* ─── Post list ──────────────────────────────────────────────────────────── */
 .post-item {
   padding: 22px 0;

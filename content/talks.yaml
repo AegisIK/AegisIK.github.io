@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  INVITED TALKS
+#
+#  To add a talk, copy a block. Order doesn't matter — the page sorts by
+#  `date`, newest first.
+#
+#  Fields:
+#    venue    (required)  Who invited you — group, lab, company, or course
+#    date     (required)  "YYYY-MM", quoted. Rendered as "September 2026"
+#    title    (optional)  Talk title, if it had one. Rendered above the venue
+#    location (optional)  "Menlo Park, CA" or "Virtual"
+#    url      (optional)  Slides, recording, or event page
+# ─────────────────────────────────────────────────────────────────────────────
+
+- venue: "SLAC-Stanford Battery Center"
+  date: "2026-09"
+  title: "Scaling MLIP Inference and LLM Agents"
+  # location: ""
+  # url: ""
+
+- venue: "NVIDIA BioNeMo"
+  date: "2026-06"
+  title: "SMDD-Bench: Can LLMs Solve Real-World Small Molecule Drug Design Tasks?"
+
+- venue: "AI Agents for Engineers (24-880), Carnegie Mellon University"
+  date: "2026-03"
+  title: "Software Engineering Agents"
+
+- venue: "LeMaterial Reading Group"
+  date: "2026-03"
+  title: "Accelerating and Scaling MLIP Inference"
